@@ -1,0 +1,15 @@
+node_modules/
+dist/
+data/
+*.db
+*.db-shm
+*.db-wal
+.env
+.env.local
+*.log
+__pycache__/
+*.pyc
+.venv/
+venv/
+python/*/models/
+python/*/.cache/

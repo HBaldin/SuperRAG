@@ -1,0 +1,42 @@
+{
+  "dataDir": "./data",
+  "logging": {
+    "level": "info",
+    "pretty": true,
+    "traceEnabled": false
+  },
+  "embedding": {
+    "serverUrl": "http://localhost:8001",
+    "model": "BAAI/bge-m3",
+    "batchSize": 32,
+    "dimensions": 1024
+  },
+  "rerank": {
+    "serverUrl": "http://localhost:8002",
+    "model": "BAAI/bge-reranker-v2-m3",
+    "topK": 20,
+    "enabled": true
+  },
+  "qdrant": {
+    "url": "http://localhost:6333",
+    "collectionPrefix": "superrag",
+    "vectorSize": 1024
+  },
+  "chunking": {
+    "maxTokens": 512,
+    "overlapTokens": 64,
+    "minTokens": 20
+  },
+  "retrieval": {
+    "maxCandidates": 50,
+    "vectorTopK": 20,
+    "ftsTopK": 20,
+    "finalTopK": 10,
+    "compressionRatio": 0.6
+  },
+  "indexing": {
+    "batchSize": 50,
+    "parallelParsers": 4,
+    "watchDebounceMs": 500
+  }
+}
