@@ -8,6 +8,7 @@ Pré-condições
 --------------
 - Sistema hospedeiro: recomenda-se Linux ou macOS.
 - Docker instalado e executável pelo processo do agente (para Qdrant) ou Qdrant acessível pela URL configurada.
+ - Docker ou Podman instalados (recomendado). Alternativamente, o repositório pode ser executado em um único container self-contained fornecido nesta árvore (`Dockerfile` + `docker-compose.yml`).
 - Python 3.9+ e Node 18+ disponíveis.
 - Acesso de rede às portas localhost 3000, 8001, 8002, 6333, salvo alteração na configuração.
 
@@ -67,6 +68,8 @@ Coloque um arquivo `rag.config.json` mínimo na raiz do repositório ou defina a
   "qdrant": { "url": "http://localhost:6333" }
 }
 ```
+
+Observação: o repositório também fornece um Dockerfile multi-stage e um docker-compose.yml para subir todos os componentes (Qdrant + embedding server + reranker + API) em um único container. Veja a seção "Container único (Docker/Podman)" no README ou `docs/docker.md` para instruções de uso.
 
 Verificações de saúde
 -------------

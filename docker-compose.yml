@@ -1,0 +1,49 @@
+# =============================================================================
+# SuperRAG — docker-compose.yml
+# Single container com toda a infraestrutura necessária para uso por LLMs
+#
+# Uso básico:
+#   docker compose up -d
+#
+# Com repositório para indexar:
+#   REPO_PATH=/caminho/do/projeto docker compose up -d
+#
+# Ou edite REPO_PATH abaixo diretamente.
+# =============================================================================
+
+services:
+  superrag:
+    image: superrag:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: superrag
+    ports:
+      - "${API_PORT:-3000}:3000"
+    volumes:
+      # Repositório a indexar (read-only recomendado)
+      # Defina REPO_PATH no ambiente ou edite aqui
+      - "${REPO_PATH:-/tmp/empty-workspace}:/workspace:ro"
+      # Persistência de índices, SQLite e cache entre reinicializações
+      - superrag-data:/app/data
+    environment:
+      # Indexação automática ao iniciar
+      AUTO_INDEX: "${AUTO_INDEX:-true}"
+      # Caminho interno do repositório (não altere — use REPO_PATH no host)
+      WATCH_PATH: "/workspace"
+      # Ativa file watcher para indexação incremental
+      WATCH_ENABLED: "${WATCH_ENABLED:-true}"
+      # Nível de log: debug | info | warn | error
+      RAG_LOG_LEVEL: "${RAG_LOG_LEVEL:-info}"
+    restart: unless-stopped
+    # Aguarda o health check passar antes de considerar o container saudável
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      start_period: 120s
+      retries: 5
+
+volumes:
+  superrag-data:
+    driver: local

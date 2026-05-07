@@ -237,6 +237,46 @@ npm start
 npm run dev
 ```
 
+Container único (Docker/Podman)
+------------------------------
+
+O repositório inclui um `Dockerfile` multi-stage e um `docker-compose.yml` que constroem uma única imagem contendo:
+- Qdrant (binário copiado da imagem oficial)
+- Servidor de embeddings Python (FastAPI)
+- Servidor de reranker Python (FastAPI)
+- API Node.js (Fastify)
+
+Uso rápido:
+
+1) Build da imagem
+
+```bash
+docker build -t superrag .
+# ou com docker-compose
+docker compose build
+```
+
+2) Subir o container apontando um repositório para indexar
+
+```bash
+REPO_PATH=/caminho/do/seu/projeto docker compose up -d
+# ou
+docker run -d -p 3000:3000 -v /caminho/do/seu/projeto:/workspace:ro -v superrag-data:/app/data superrag:latest
+```
+
+3) Checar saúde
+
+```bash
+curl http://localhost:3000/health
+```
+
+Notas:
+- A imagem pré-baixa modelos ML no build, então o tamanho final pode ficar em ~5-6GB.
+- Use `REPO_PATH` (ou monte `/workspace`) para permitir que o container indexe e fique ouvindo mudanças.
+- Persistência de índices/SQLite/Qdrant é feita em `/app/data` (volume `superrag-data` no docker-compose).
+
+Para instruções mais detalhadas, veja `docs/docker.md`.
+
 --------------------------------------------------------------------------------
 
 Início rápido (5 minutos, fim a fim)
