@@ -22,6 +22,7 @@ export function getQdrantClient(): QdrantClient {
     _client = new QdrantClient({
       url: config.url,
       apiKey: config.apiKey,
+      checkCompatibility: false,
     });
   }
   return _client;

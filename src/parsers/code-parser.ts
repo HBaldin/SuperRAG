@@ -40,7 +40,10 @@ let TreeSitter: TreeSitterModule | null = null;
 
 async function getTreeSitter(): Promise<TreeSitterModule> {
   if (!TreeSitter) {
-    TreeSitter = (await import('tree-sitter')) as unknown as TreeSitterModule;
+    const mod = await import('tree-sitter');
+    // tree-sitter >= 0.21: the default export IS the Parser constructor
+    const ParserCtor = (mod.default ?? mod) as unknown as new () => TreeSitterParser;
+    TreeSitter = { Parser: ParserCtor };
   }
   return TreeSitter;
 }
