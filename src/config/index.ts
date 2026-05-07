@@ -20,6 +20,7 @@ const RerankConfigSchema = z.object({
   model: z.string().default('BAAI/bge-reranker-v2-m3'),
   topK: z.number().int().positive().default(20),
   timeoutMs: z.number().int().positive().default(15000),
+  maxRetries: z.number().int().nonnegative().default(3),
   enabled: z.boolean().default(true),
 });
 

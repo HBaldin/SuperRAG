@@ -1,0 +1,44 @@
+{
+  "name": "superrag-mcp-adapter",
+  "displayName": "SuperRAG MCP Adapter",
+  "publisher": "superrag",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "main": "./extension.js",
+  "activationEvents": [
+    "onCommand:superrag.registerMcp",
+    "onCommand:superrag.testMcp"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "superrag.registerMcp",
+        "title": "SuperRAG: Register MCP Server"
+      },
+      {
+        "command": "superrag.testMcp",
+        "title": "SuperRAG: Test MCP Server"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "SuperRAG MCP",
+      "properties": {
+        "superragMcp.serverUrl": {
+          "type": "string",
+          "default": "http://localhost:3000",
+          "description": "URL base of SuperRAG MCP API (e.g. http://localhost:3000)"
+        }
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/SuperRAG"
+  },
+  "keywords": ["mcp", "superrag", "agents"],
+  "author": "SuperRAG",
+  "license": "MIT"
+}
