@@ -60,11 +60,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /build
 
 COPY package.json package-lock.json ./
-RUN npm ci --omit=dev
+RUN npm ci
 
 COPY tsconfig.json ./
 COPY src/ ./src/
-RUN npm run build
+RUN npm run build && npm prune --omit=dev
 
 # -----------------------------------------------------------------------------
 # Stage 4: Runtime — imagem final mínima
